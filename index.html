@@ -10,15 +10,24 @@
     <div id="app">
         <!-- v-show (hide element) es igual a v-if (delete element) -->
             <h1 v-if="message.length > 0">Hola <span v-text="message"></span></h1>
-            <h2 v-else>NO HAY NADA</h2>
+            <h2 v-else>Por favor ingrese su nombre</h2>
             <input type="text" v-model="message">
+            <hr>
+            <h2>Lista de tareas</h2>
+            <ul>
+                <li v-for="tarea in tareas">{{tarea}}</li>
+            </ul>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script>
         var app = new Vue({
             el: '#app',
             data: {
-                message: "Mundo",
+                message: "",
+                tareas: [
+                    "Aprender Laravel",
+                    "Aprender Vue"
+                ]
             }
         });
     </script>
