@@ -5,30 +5,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Curso Basico Vue.js</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <style>
+    .glyphicon{
+        cursor: pointer;
+    }
+    </style>
 </head>
 <body>
     <div id="app">
         <!-- v-show (hide element) es igual a v-if (delete element) -->
-            <h1 v-if="message.length > 0">Hola <span v-text="message"></span></h1>
+            <h1 v-if="message">Hola <span v-text="message"></span></h1>
             <h2 v-else>Por favor ingrese su nombre</h2>
             <input type="text" v-model="message">
+            <!-- v-on:metodo == @metodo -->
+            <button class="btn btn-primary" v-on:click="reverse">INVERTIR</button>
             <hr>
             <h2>Lista de tareas</h2>
             <ul>
                 <li v-for="tarea in tareas">
                     <span v-text="tarea.title"></span>
-                    <span v-if="tarea.completed">  Completa</span>                  
-                    <span v-else>  Incompleta</span>                  
+                    <span @click="tarea.completed = false" class="btn btn-secondary glyphicon glyphicon-check" v-if="tarea.completed">  </span>                  
+                    <span @click="tarea.completed = true" class="btn btn-secondary glyphicon glyphicon-unchecked" v-else>  </span>                  
+                </li>
+                <li class="form-inline"> 
+                    <input v-on:keyup.enter="addTask" v-model="newTask" type="text" class="form-control">
+                    <button class="btn btn-primary glyphicon glyphicon-plus" @click="addTask"></button>
                 </li>
             </ul>
+
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script>
         var app = new Vue({
             el: '#app',
             data: {
+                newTask: "",
                 message: "",
                 tareas: [
                     {
@@ -44,6 +56,19 @@
                         completed: false,
                     }
                 ]
+            },
+            methods: {
+                reverse: function () {
+                    this.message = this.message.split('').reverse().join('')
+                },
+                addTask: function () {
+                    if(this.newTask.length == 0){ return alert('La tarea no puede estar vacia')};
+                    this.tareas.push({
+                        title: this.newTask,
+                        completed: false,
+                    });
+                    this.newTask = "";
+                }
             }
         });
     </script>
