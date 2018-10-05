@@ -27,10 +27,7 @@
             <ul>
                 <li v-for="tarea in tareas">
                     <span v-text="tarea.title"></span>
-                    <span @click="tarea.completed = !tarea.completed"
-                          :class="taskClasses(tarea)">
-
-                    </span>
+                    <span @click="tarea.completed = !tarea.completed" :class="taskClasses(tarea)"></span>
                     <!-- Version con bind class corto -->
                     <!-- <span @click="tarea.completed = !tarea.completed"  -->
                           <!-- :class="['btn btn-secondary glyphicon', tarea.completed ? 'glyphicon-check' : 'glyphicon-unchecked']"></span> -->
@@ -66,7 +63,7 @@
                     },
                     {
                         title: "Aprender Vue",
-                        completed: false,
+                        completed: true,
                     },
                     {
                         title: "Aprender Angular",
@@ -88,6 +85,9 @@
                 },
                 taskClasses: function (tarea) {
                     return ['btn btn-secondary glyphicon', tarea.completed ? 'glyphicon-check' : 'glyphicon-unchecked'];
+                },
+                changeComplete: function (tarea) {
+                    tarea.completed = !tarea.completed;
                 }
             },
             computed: {
