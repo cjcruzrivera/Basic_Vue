@@ -27,12 +27,21 @@
             <ul>
                 <li v-for="tarea in tareas">
                     <span v-text="tarea.title"></span>
-                    <span @click="tarea.completed = !tarea.completed" 
+                    <span @click="tarea.completed = !tarea.completed"
+                          :class="taskClasses(tarea)">
+
+                    </span>
+                    <!-- Version con bind class corto -->
+                    <!-- <span @click="tarea.completed = !tarea.completed"  -->
+                          <!-- :class="['btn btn-secondary glyphicon', tarea.completed ? 'glyphicon-check' : 'glyphicon-unchecked']"></span> -->
+                    <!-- Version con bind class largo -->
+                    <!-- <span @click="tarea.completed = !tarea.completed" 
                           class="btn btn-secondary"
                           v-bind:class="{'glyphicon': true,
                                          'glyphicon-check': tarea.completed,
                                          'glyphicon-unchecked': !tarea.completed,
-                                         }"></span>
+                                         }"></span> -->
+                                         <!-- Version con IF ELSE -->
                     <!-- <span @click="tarea.completed = false" class="btn btn-secondary glyphicon glyphicon-check" v-if="tarea.completed">  </span>                   -->
                     <!-- <span @click="tarea.completed = true" class="btn btn-secondary glyphicon glyphicon-unchecked" v-else>  </span>                   -->
                 </li>
@@ -76,6 +85,9 @@
                         completed: false,
                     });
                     this.newTask = "";
+                },
+                taskClasses: function (tarea) {
+                    return ['btn btn-secondary glyphicon', tarea.completed ? 'glyphicon-check' : 'glyphicon-unchecked'];
                 }
             },
             computed: {
