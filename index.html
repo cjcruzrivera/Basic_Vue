@@ -22,11 +22,19 @@
             <button class="btn btn-primary" v-on:click="reverse">INVERTIR</button>
             <hr>
             <h2>Lista de tareas</h2>
+            <h4 >Tareas completas: {{completedTasks}}</h4>
+            <h4 >Tareas incompletas: {{incompletedTasks}}</h4>
             <ul>
                 <li v-for="tarea in tareas">
                     <span v-text="tarea.title"></span>
-                    <span @click="tarea.completed = false" class="btn btn-secondary glyphicon glyphicon-check" v-if="tarea.completed">  </span>                  
-                    <span @click="tarea.completed = true" class="btn btn-secondary glyphicon glyphicon-unchecked" v-else>  </span>                  
+                    <span @click="tarea.completed = !tarea.completed" 
+                          class="btn btn-secondary"
+                          v-bind:class="{'glyphicon': true,
+                                         'glyphicon-check': tarea.completed,
+                                         'glyphicon-unchecked': !tarea.completed,
+                                         }"></span>
+                    <!-- <span @click="tarea.completed = false" class="btn btn-secondary glyphicon glyphicon-check" v-if="tarea.completed">  </span>                   -->
+                    <!-- <span @click="tarea.completed = true" class="btn btn-secondary glyphicon glyphicon-unchecked" v-else>  </span>                   -->
                 </li>
                 <li class="form-inline"> 
                     <input v-on:keyup.enter="addTask" v-model="newTask" type="text" class="form-control">
@@ -68,6 +76,18 @@
                         completed: false,
                     });
                     this.newTask = "";
+                }
+            },
+            computed: {
+                completedTasks: function () {
+                    return this.tareas.filter(function (tarea) {
+                        return tarea.completed;
+                    }).length;
+                },
+                incompletedTasks: function () {
+                    return this.tareas.filter(function (tarea) {
+                        return !tarea.completed;
+                    }).length;
                 }
             }
         });
